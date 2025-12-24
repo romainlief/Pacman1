@@ -88,7 +88,7 @@ class SearchAgent(Agent):
         if fn not in dir(search):
             raise AttributeError(fn + " is not a search function in search.py.")
         func = getattr(search, fn)
-        if "heuristic" not in func.func_code.co_varnames:
+        if "heuristic" not in func.__code__.co_varnames:
             print("[SearchAgent] using function " + fn)
             self.searchFunction = func
         else:
@@ -335,7 +335,6 @@ class CornersProblem(search.SearchProblem):
         self._expanded = 0  # DO NOT CHANGE; Number of search nodes expanded
         # Please add any code here which you would like to use
         # in initializing the problem
-        "*** YOUR CODE HERE ***"
 
         self.corner_visited = {corner: False for corner in self.corners}
         for corner in self.corners:
@@ -347,14 +346,12 @@ class CornersProblem(search.SearchProblem):
         Returns the start state (in your state space, not the full Pacman state
         space)
         """
-        "*** YOUR CODE HERE ***"
         return (self.startingPosition, tuple(self.corner_visited.items()))
 
     def isGoalState(self, state):
         """
         Returns whether this search state is a goal state of the problem.
         """
-        "*** YOUR CODE HERE ***"
         return False if not all(corner[1] for corner in state[1]) else True
 
     def getSuccessors(self, state):
@@ -382,7 +379,6 @@ class CornersProblem(search.SearchProblem):
             #   nextx, nexty = int(x + dx), int(y + dy)
             #   hitsWall = self.walls[nextx][nexty]
 
-            "*** YOUR CODE HERE ***"
             x, y = state[0]
             dx, dy = Actions.directionToVector(action)
             nextx, nexty = int(x + dx), int(y + dy)
@@ -554,7 +550,14 @@ def foodHeuristic(state, problem):
     if not food_list:
         return 0
     else:
-        h = max(tuple(map(lambda x : mazeDistance(position, x, problem.startingGameState), foodGrid.asList())))
+        h = max(
+            tuple(
+                map(
+                    lambda x: mazeDistance(position, x, problem.startingGameState),
+                    foodGrid.asList(),
+                )
+            )
+        )
     return h
 
     # inconsistent
@@ -656,7 +659,6 @@ class ClosestDotSearchAgent(SearchAgent):
         walls = gameState.getWalls()
         problem = AnyFoodSearchProblem(gameState)
 
-        "*** YOUR CODE HERE ***"
         state_queue = util.Queue()
         state_queue.push((startPosition, []))
         visited = set()
@@ -712,10 +714,7 @@ class AnyFoodSearchProblem(PositionSearchProblem):
         complete the problem definition.
         """
         x, y = state
-
-        "*** YOUR CODE HERE ***"
         return self.food[x][y]
-        # util.raiseNotDefined()
 
 
 def mazeDistance(point1, point2, gameState):
