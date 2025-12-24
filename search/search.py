@@ -173,7 +173,7 @@ def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
     "*** YOUR CODE HERE ***"
     pq = util.PriorityQueue()
     start_state = problem.getStartState()
-    pq.push((start_state, []), 0)
+    pq.push((start_state, []), heuristic(start_state, problem))
     visited = set()
     
     while not pq.isEmpty():

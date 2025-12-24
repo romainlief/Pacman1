@@ -88,8 +88,8 @@ class SearchAgent(Agent):
         if fn not in dir(search):
             raise AttributeError(fn + " is not a search function in search.py.")
         func = getattr(search, fn)
-        if 'heuristic' not in func.func_code.co_varnames:
-            print('[SearchAgent] using function ' + fn)
+        if "heuristic" not in func.func_code.co_varnames:
+            print("[SearchAgent] using function " + fn)
             self.searchFunction = func
         else:
             if heuristic in globals().keys():
@@ -547,8 +547,15 @@ def foodHeuristic(state, problem):
     Subsequent calls to this heuristic can access
     problem.heuristicInfo['wallCount']
     """
+    h = 0
+    min_distance = float("+inf")
     position, foodGrid = state
-    "*** YOUR CODE HERE ***"
+    food_list = foodGrid.asList()
+    if not food_list:
+        return 0
+    else:
+        h = max(tuple(map(lambda x : mazeDistance(position, x, problem.startingGameState), foodGrid.asList())))
+    return h
 
     # inconsistent
     """
