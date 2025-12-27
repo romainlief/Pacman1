@@ -16,3 +16,5 @@ To run the Pacman game from the root directory, execute the following command in
 ```bash
 cd search && python pacman.py
 ```
+
+All the commands and options for running the game can be found in the original project description provided by UC Berkeley(click the link above).
